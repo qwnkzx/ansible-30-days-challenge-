@@ -1,0 +1,29 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for install_app
+
+- name: make a group
+  ansible.builtin.group:
+    name: dev 
+    state: present 
+
+- name: create an user
+  ansible.builtin.user:
+    name: vasya 
+    group: dev 
+    create_home: true 
+    password: "{{ vasya_password }}"
+
+- name: create an user
+  ansible.builtin.user:
+    name: dima
+    group: dev 
+    create_home: true 
+    password: "{{ dima_password }}"
+
+- name: create an user
+  ansible.builtin.user:
+    name: petya
+    group: dev 
+    create_home: true 
+    password: "{{ petya_password }}"
