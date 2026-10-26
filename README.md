@@ -1,8 +1,8 @@
-# 🚀 Ansible 30-Days Challenge | DevOps Песочница
+# Ansible 30-Days Challenge | DevOps Песочница
 
 Мой личный челлендж по изучению и автоматизации инфраструктуры с помощью **Ansible** и **Terraform**. Каждый день — новая практическая задача, от управления пакетами до деплоя полноценных приложений в Docker под прикрытием Nginx с SSL.
 
-## 📊 Прогресс челленджа
+## Прогресс челленджа
 
 ### Неделя 1: Базовый синтаксис и основы Linux (Уровень: Beginner)
 *   [x] **День 1:** Настройка окружения. Установка Ansible, конфигурация `hosts.ini` и первый пинг (`ansible all -m ping`).
@@ -45,7 +45,6 @@
 ---
 
 ## 🛠️ Стек технологий
-*   **Infrastructure:** Cloud.ru / Yandex Cloud (развертывание через Terraform)
 *   **Automation:** Ansible (Roles, Templates, Vault, Handlers)
 *   **Containerization:** Docker, Docker Compose
 *   **Web & Security:** Nginx, UFW, SSL, Crontab
