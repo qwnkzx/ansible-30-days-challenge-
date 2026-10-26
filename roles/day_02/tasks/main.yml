@@ -1,0 +1,11 @@
+---
+- name: Install packages 
+  ansible.builtin.apt:
+    loop:
+      - curl 
+      - git
+      - htop
+    state: present 
+    update_cache: yes 
+  become: true 
+    
