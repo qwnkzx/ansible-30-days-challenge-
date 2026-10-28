@@ -1,0 +1,40 @@
+--- 
+ - name: Install my project to other system
+   hosts: all 
+   become: true 
+
+   roles:
+      - day_01
+    
+  #  tasks:
+  #    - name: Install 
+  #      ansible.builtin.apt:
+  #        name:
+  #          - git 
+  #          - docker.io 
+  #          - docker-compose-v2
+  #          - python3-docker
+  #        state: present 
+  #        update_cache: yes 
+  #    - name: Start Docker 
+  #      ansible.builtin.systemd: 
+  #        name: docker 
+  #        state: started 
+  #        enabled: true 
+    
+
+  #    - name: Pull project from github
+  #      ansible.builtin.git:
+  #        repo: "https://github.com/qwnkzx/app-with-reverse-proxy-and-database"
+  #        dest: /var/www/project 
+  #        version: main 
+
+  #    - name: Start project
+  #      community.docker.docker_compose_v2:
+  #        project_src: /var/www/project 
+  #        state: present
+  #        build: always 
+
+
+
+         
