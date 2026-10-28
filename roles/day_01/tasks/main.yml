@@ -12,18 +12,18 @@
     name: vasya 
     group: dev 
     create_home: true 
-    password: "{{ vasya_password }}"
+    password: "{{ vasya_password | password_hash('sha512') }}"
 
 - name: create an user
   ansible.builtin.user:
     name: dima
     group: dev 
     create_home: true 
-    password: "{{ dima_password }}"
+    password: "{{ dima_password | password_hash('sha512') }}"
 
 - name: create an user
   ansible.builtin.user:
     name: petya
     group: dev 
     create_home: true 
-    password: "{{ petya_password }}"
+    password: "{{ petya_password | password_hash('sha512') }}"
