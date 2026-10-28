@@ -1,0 +1,72 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for day_03
+
+- name: install ssh 
+  ansible.builtin.apt:
+    name: openssh-server
+    state: present 
+
+- name: start SSH
+  ansible.builtin.service:
+    name: ssh 
+    state: started 
+    enabled: true 
+
+- name: create SSH dirs
+  ansible.builtin.file:
+    path: "/home/{{ item.name }}/.ssh"
+    state: directory
+    group: "{{ item.group }}"
+    owner: "{{ item.name }}"
+    mode: '0700'
+  loop: "{{ users }}"
+
+- name: Create a ssh config
+  ansible.builtin.file:
+    path: "/home/{{ item.name }}/.ssh/config"
+    mode: '0600'
+    state: touch 
+  loop: "{{ users }}"
+
+- name: Create a ssh hosts file 
+  ansible.builtin.file:
+    path: "/home/{{ item.name }}/.ssh/known_hosts"
+    mode: '0600'
+    state: touch 
+  loop: "{{ users }}"
+
+- name: create keys for users
+  community.crypto.openssh-keypair:
+    path: "/home/{{ item.name }}/.ssh/id_rsa"
+    type: rsa 
+    size: 4096
+    state: present 
+    mode: '0600'
+  loop: "{{ users }}"
+
+- name: Rules of ssh config and keys files 
+  ansible.builtin.file: 
+    path: "/home/{{ item.name }}/.ssh/{{ item.file }}"
+    mode: "{{ item.mode }}"
+    owner: "{{ item.name }}"
+  loop: "{{ ssh_files }}"
+
+- name: config ssh 
+  ansible.builtin.lineinfile:
+    path: "/etc/ssh/sshd_config"
+    regexp: '^#?PermitRootLogin'
+    line: 'PermitRootLogin no'
+    validate: '/usr/sbin/sshd -t -f %s'
+    state: present 
+  notify: Restart SSH
+
+- name: config ssh2
+  ansible.builtin.lineinfile:
+    path: "/etc/ssh/sshd_config"
+    regexp: '^#?PasswordAuthentication'
+    line: 'PasswordAuthentication no'
+    validate: '/usr/sbin/sshd -t -f %s'
+    state: present 
+  notify: Restart SSH 
+  

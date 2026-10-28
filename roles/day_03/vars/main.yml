@@ -1,0 +1,23 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for day_03
+users:
+  - { name: 'petya', group: 'dev' }
+  - { name: 'vasya', group: 'dev' }
+  - { name: 'dima', group: 'dev' } 
+
+ssh_files:
+  - { name: 'petya', file: 'config', mode: '0600' }
+  - { name: 'petya', file: 'id_rsa', mode: '0600' }
+  - { name: 'petya', file: 'id_rsa.pub', mode: '0644' }
+  - { name: 'petya', file: 'known_hosts', mode: '0600' }
+
+  - { name: 'vasya', file: 'config', mode: '0600' }
+  - { name: 'vasya', file: 'id_rsa', mode: '0600' }
+  - { name: 'vasya', file: 'id_rsa.pub', mode: '0644' }
+  - { name: 'vasya', file: 'known_hosts', mode: '0600' }
+
+  - { name: 'dima', file: 'config', mode: '0600' }
+  - { name: 'dima', file: 'id_rsa', mode: '0600' }
+  - { name: 'dima', file: 'id_rsa.pub', mode: '0644' }
+  - { name: 'dima', file: 'known_hosts', mode: '0600' }
