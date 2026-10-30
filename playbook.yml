@@ -1,0 +1,8 @@
+--- 
+ - name: Install my project to other system
+   hosts: all 
+   become: true 
+
+   roles:
+      - day_01
+    
