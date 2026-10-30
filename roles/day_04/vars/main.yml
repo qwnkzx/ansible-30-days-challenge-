@@ -1,0 +1,7 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for day_04
+
+path_app: "/var/log/my_app"
+
+main_user: "bubu"
