@@ -1,0 +1,7 @@
+- name: Ansible-30-days-challenge
+  hosts: all 
+  become: true 
+
+
+  roles:
+    - day_05

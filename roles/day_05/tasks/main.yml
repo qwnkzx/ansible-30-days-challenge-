@@ -1,0 +1,18 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for day_05
+- name: copy cleaner 
+  ansible.builtin.copy:
+    src: /Users/dimas/ansible_practice/roles/clean_tmp.sh 
+    dest: /usr/local/bin/clean_tmp.sh 
+    owner: root 
+    group: root 
+    mode: '0755'
+
+- name: settings for crontab 
+  ansible.builtin.cron:
+    name: "Cleamer for /tmp"
+    job: "/usr/local/bin/clean_tmp.sh /tmp"
+    minute: "*/15"
+    user: root
+
