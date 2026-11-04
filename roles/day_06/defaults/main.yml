@@ -1,0 +1,5 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for day_06
+path_for_node_exporter: /usr/local/bin
+temporary_folder: /tmp
