@@ -1,0 +1,8 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for day_07
+users_passwords:
+  - {name: "petya", password: "131jioSF89sdjkf"}
+  - {name: "vasya", password: "nldfs234014412SFKSf9234"}
+  - {name: "anya", password: "2143mksfdf124ksdfm"}
+

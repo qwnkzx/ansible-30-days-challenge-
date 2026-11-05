@@ -1,0 +1,112 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for day_07
+- name: Create group test
+  ansible.builtin.group:
+    name: test 
+    state: present 
+
+- name: Create group prod
+  ansible.builtin.group:
+    name: prod
+    state: present 
+
+
+- name: Create users 
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    group: 'test'
+    groups: 'prod'
+    create_home: true 
+    generate_ssh_key: true 
+    ssh_key_type: ed25519
+    password: "{{ item.password | password_hash('sha512') }}"
+  loop: "{{ users_passwords }}"
+
+
+# - name: Install SSH
+#   ansible.builtin.apt:
+#     name: openssh-server 
+#     state: present 
+
+# - name: Start SSH 
+#   ansible.builtin.service: 
+#     name: ssh.service 
+#     state: started 
+
+# - name: make dir for ssh 
+#   ansible.builtin.file:
+#     path: "/home/{{ item.users }}/.ssh"
+#     state: directory 
+#     group: "{{ item.groups }}"
+#     mode: '0700'
+#   loop: 
+#     - "{{ users }}"
+#     - "{{ groups }}"
+
+# - name: Create a ssh config
+#   ansible.builtin.file:
+#     path: "/home/{{ item }}/.ssh/config"
+#     mode: '0600'
+#     state: touch 
+#   loop: "{{ users }}"
+
+# - name: create a ssh hosts
+#   ansible.builtin.file:
+#     path: "/home/{{ item }}/.ssh/known_hosts"
+#     mode: '0600'
+#     state: touch
+#   loop: "{{ users }}"
+
+# - name: generate ssh keys
+#   community.crypto.openssh-keypair:
+#     path: "/home/{{ item }}/.ssh/id_ed25519"
+#     state: present 
+#     type: ed25519
+#     mode: '0600'
+#     owner: 
+#   loop: "{{ users }}"
+
+- name: config ssh 
+  ansible.builtin.lineinfile:
+    path: "/etc/ssh/sshd_config"
+    regexp: '^#PermitRootLogin'
+    line: 'PermitRootLogin no'
+    state: present 
+  notify: Restart ssh
+
+- name: config ssh 2 
+  ansible.builtin.lineinfile:
+    path: "/etc/ssh/sshd_config"
+    regexp: '^#PasswordAuthentication'
+    line: 'PasswordAuthentication no'
+    state: present
+  notify: Restart ssh
+
+- name: Install utils on Ubuntu 
+  ansible.builtin.apt:
+    name: "{{ utils }}"
+    state: present 
+  when: ansible_os_family == "Debian"
+
+
+- name: Install utils on other OS
+  ansible.builtin.dnf:
+    name: "{{ utils }}"
+    state: present
+  when: ansible_os_family != "Debian"
+
+- name: copy /tmp-cleaner
+  ansible.builtin.copy:
+    src: /Users/dimas/ansible_practice/roles/clean_tmp.sh
+    dest: /usr/local/bin/clean_tmp.sh
+    mode: '0755'
+    owner: root 
+    group: root 
+  
+- name: set cleaner to crontab 
+  ansible.builtin.cron:
+    name: "Cleaner for tmp"
+    job: "/usr/local/bin/clean_tmp.sh /tmp"
+    minute: "*/30"
+    user: root 
